@@ -5,16 +5,20 @@ import { useGlobalContext } from './context';
 const Navbar = () => {
   const { openSidebar, oepnSubmenu, closeSubmenu } = useGlobalContext();
   const displaySubmenu = (e) => {
-    console.log('hello');
-    oepnSubmenu();
+    const page = e.target.textContent;
+    const tempBtn = e.target.getBoundingClientRect();
+    const center = tempBtn.left + tempBtn.width / 2;
+    const bottom = tempBtn.bottom - 3;
+    oepnSubmenu(page, { center, bottom });
   };
 
-  const hideSubmenu = (e) => {
-    console.log('hello');
-    closeSubmenu();
+  const handleSubmenu = (e) => {
+    if (!e.target.classList.contains('link-btn')) {
+      closeSubmenu();
+    }
   };
   return (
-    <nav className='nav'>
+    <nav className='nav' onMouseOver={handleSubmenu}>
       <div className='nav-center'>
         <div className='nav-header'>
           <img src={logo} alt='stripe' className='nav-logo' />
@@ -24,29 +28,17 @@ const Navbar = () => {
         </div>
         <ul className='nav-links'>
           <li>
-            <button
-              className='link-btn'
-              onMouseEnter={displaySubmenu}
-              onMouseLeave={hideSubmenu}
-            >
+            <button className='link-btn' onMouseEnter={displaySubmenu}>
               products
             </button>
           </li>
           <li>
-            <button
-              className='link-btn'
-              onMouseEnter={displaySubmenu}
-              onMouseLeave={hideSubmenu}
-            >
+            <button className='link-btn' onMouseEnter={displaySubmenu}>
               developers
             </button>
           </li>
           <li>
-            <button
-              className='link-btn'
-              onMouseEnter={displaySubmenu}
-              onMouseLeave={hideSubmenu}
-            >
+            <button className='link-btn' onMouseEnter={displaySubmenu}>
               company
             </button>
           </li>
